@@ -1,0 +1,277 @@
+#feed-container {
+  height: 100%;
+}
+
+#post-container {
+  margin: 20px;
+  width: 800px;
+  height: 200px;
+  border: 2px solid;
+  background-color: #f0f8ff;
+  border-radius: 10px;
+  display: flex;
+  flex-direction: column;
+  padding: 10px;
+  -webkit-box-shadow: 2px 24px 30px 3px rgba(0, 0, 0, 0.57);
+  -moz-box-shadow: 2px 24px 30px 3px rgba(0, 0, 0, 0.57);
+  box-shadow: 2px 24px 30px 3px rgba(0, 0, 0, 0.57);
+  color: #224354;
+  position: relative;
+}
+
+#status-input {
+  border: none;
+  width: 100%;
+  height: 50px;
+  font-size: 30px;
+  color: #224354;
+}
+
+#characters-error {
+  color: red;
+  position: absolute;
+  top: 120px;
+}
+
+#feed-wrapper {
+  display: flex;
+  justify-content: right;
+}
+
+#post-button {
+  border: 2px solid white;
+  background-color: #224354;
+  color: aliceblue;
+  font-size: 30px;
+  border-radius: 5px;
+  opacity: 0.5;
+  transition: 0.3s;
+  width: 200px;
+  margin-top: 10px;
+}
+
+#post-button:hover {
+  cursor: pointer;
+  border: 2px solid #224354;
+  background: transparent;
+  cursor: pointer;
+  color: #224354;
+  opacity: 0.8;
+  transition: 0.3s;
+  box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2);
+}
+
+#feed-icons-personal-feed {
+  position: absolute;
+  left: 5px;
+  top: 160px;
+  left: 50px;
+  cursor: pointer;
+  transition: width 1s;
+  display: flex;
+  width: 23px;
+  overflow: hidden;
+  align-items: center;
+  height: 25px;
+  padding: 5px;
+}
+
+#feed-icons-personal-feed:hover {
+  width: 180px;
+}
+
+#feed-icons-personal-feed p {
+  white-space: nowrap;
+  transition: width 1s;
+  width: 180px;
+  margin-left: 5px;
+}
+
+#feed-icons-public-feeds {
+  display: flex;
+  transition: width 1s;
+  width: 30px;
+  overflow: hidden;
+  align-items: center;
+  height: 30px;
+  cursor: pointer;
+  left: 250px;
+  top: 160px;
+  position: absolute;
+  height: 30px;
+  padding: 5px;
+}
+
+#feed-icons-public-feeds:hover {
+  width: 270px;
+}
+
+#feed-icons-public-feeds p {
+  white-space: nowrap;
+  transition: width 1s;
+  width: 270px;
+}
+
+#feed-icons-public-feeds img {
+  width: 30px;
+  height: auto;
+  margin-right: 5px;
+}
+
+.active {
+  background-color: #224354;
+  border-radius: 50px;
+  color: aliceblue;
+  align-self: center;
+  justify-self: center;
+}
+
+.active img {
+  filter: brightness(15);
+}
+
+#feed {
+  color: #224354;
+  display: flex;
+  justify-content: space-between;
+  border-radius: 10px;
+  padding: 10px;
+  margin-top: 20px;
+  margin-left: 50px;
+  width: 80%;
+  font-size: 20px;
+  align-items: center;
+  background-color: aliceblue;
+  -webkit-box-shadow: 2px 24px 30px 3px rgba(0, 0, 0, 0.57);
+  -moz-box-shadow: 2px 24px 30px 3px rgba(0, 0, 0, 0.57);
+  box-shadow: 2px 24px 30px 3px rgba(0, 0, 0, 0.57);
+  -webkit-animation: fadeIn 1 1s ease-out;
+  -moz-animation: fadeIn 1 1s ease-out;
+  -o-animation: fadeIn 1 1s ease-out;
+  animation: fadeIn 1 1s ease-out;
+  position: relative;
+}
+
+#feed-list {
+  height: 60vh;
+  overflow-y: auto;
+  flex-direction: column-reverse;
+}
+
+#zero-feeds-text {
+  font-size: 30px;
+  text-align: center;
+  color: aliceblue;
+  font-style: italic;
+}
+
+.feed-icons-wrapper {
+  display: flex;
+  transition: 1s;
+  width: 200px;
+  justify-content: space-around;
+  align-items: center;
+}
+
+.feed-icons-wrapper {
+  position: absolute;
+  right: 120px;
+  width: 100px;
+  cursor: pointer;
+}
+
+#like-button-user {
+  position: absolute;
+  right: -50px;
+  top: -15px;
+  filter: brightness(10);
+  display: flex;
+  align-items: center;
+}
+
+#like-button-user p {
+  margin-left: 5px;
+}
+
+#private-feed {
+  color: aliceblue;
+  display: flex;
+  justify-content: space-between;
+  border-radius: 10px;
+  padding: 10px;
+  margin-top: 20px;
+  margin-left: 50px;
+  width: 80%;
+  font-size: 20px;
+  align-items: center;
+  background-color: #224354;
+  -webkit-box-shadow: 2px 24px 30px 3px rgba(0, 0, 0, 0.57);
+  -moz-box-shadow: 2px 24px 30px 3px rgba(0, 0, 0, 0.57);
+  box-shadow: 2px 24px 30px 3px rgba(0, 0, 0, 0.57);
+  -webkit-animation: fadeIn 1 1s ease-out;
+  -moz-animation: fadeIn 1 1s ease-out;
+  -o-animation: fadeIn 1 1s ease-out;
+  animation: fadeIn 1 1s ease-out;
+  position: relative;
+  border: 1px solid aliceblue;
+}
+
+.feed-content {
+  width: 260px;
+}
+
+#fade-content {
+  text-decoration: line-through;
+}
+
+#fade-out {
+  animation: fade-o-o ease 2s;
+  -webkit-animation: fade-o-o ease 2s;
+  -moz-animation: fade-o-o ease 2s;
+  -o-animation: fade-o-o ease 2s;
+  -ms-animation: fade-o-o ease 2s;
+}
+@keyframes fade-o-o {
+  0% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+
+@-moz-keyframes fade-o-o {
+  0% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+
+@-webkit-keyframes fade-o-o {
+  0% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+
+@-o-keyframes fade-o-o {
+  0% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+
+@-ms-keyframes fade-o-o {
+  0% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
+}

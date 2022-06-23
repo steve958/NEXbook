@@ -1,0 +1,82 @@
+#topbar-wrapper {
+  display: flex;
+  width: 100%;
+  height: 50px;
+  margin-top: 20px;
+  background-color: aliceblue;
+  align-items: center;
+  justify-content: space-around;
+  cursor: pointer;
+}
+
+#topbar-left {
+  display: flex;
+  align-items: center;
+  font-size: 50px;
+  letter-spacing: 5px;
+  color: #224354;
+  padding-top: 5px;
+  font-family: 'Covered By Your Grace', cursive;
+}
+
+#topbar-center {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: transparent;
+}
+
+#topbar-center input {
+  font-size: 25px;
+  width: 800px;
+  height: 30px;
+  border-radius: 10px;
+  border: none;
+  color: #224354
+}
+
+#topbar-right {
+    width: 200px;
+    display: flex;
+    justify-content: space-around;
+    position: relative;
+    color: #224354
+}
+
+#topbar-right span:active {
+    color: gold;
+}
+
+#notification-count {
+    display: flex;
+    position: absolute;
+    background-color: red;
+    color: aliceblue;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    justify-content: center;
+    align-items: center;
+    top: -5px;
+    right: 70px;
+}
+
+#message-count {
+    display: flex;
+    position: absolute;
+    background-color: red;
+    color: aliceblue;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    justify-content: center;
+    align-items: center;
+    top: -5px;
+    right: 0;
+}
+
+#book-logo {
+  width: 60px;
+  height: auto;
+  background-color: transparent;
+}

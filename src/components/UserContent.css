@@ -1,0 +1,14 @@
+#user-content-wrapper {
+  width: 95vw;
+  height: 95vh;
+  justify-self: center;
+  background-color: rgba(0, 0, 0, 0.2);
+  margin-left: 3em;
+}
+
+#content-container {
+  display: flex;
+  border: 2px solid aliceblue;
+  justify-content: space-between;
+  height: fit-content;
+}
