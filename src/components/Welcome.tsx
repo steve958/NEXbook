@@ -30,7 +30,7 @@ const Welcome: React.FC<WelcomeProps> = (props) => {
             props.setRegisterClicked(false)
           }}
         >
-          Click to login
+          login
         </button>
         <button
           data-testid="reg"
@@ -40,7 +40,7 @@ const Welcome: React.FC<WelcomeProps> = (props) => {
             props.setRegisterClicked(true)
           }}
         >
-          Click to register
+          register
         </button>
       </div>
     </div>

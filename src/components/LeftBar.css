@@ -41,13 +41,13 @@
   height: auto;
   border-radius: 50%;
   border: 2px solid aliceblue;
-  margin-right: 30px;
 }
 
 .left-bar-users-wrapper {
   display: flex;
   align-items: center;
   margin: 20px;
+  justify-content: space-between;
 }
 
 .left-bar-users-wrapper h3 {
@@ -55,7 +55,7 @@
 }
 
 .left-bar-users-wrapper h3 {
-  margin-right: 30px;
+  margin-right: 10px;
 }
 
 .send-message-icon:hover {

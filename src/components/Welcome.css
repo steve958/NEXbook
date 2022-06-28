@@ -28,6 +28,9 @@
   opacity: 0.5;
   transition: 0.3s;
   width: 300px;
+  letter-spacing: 15px;
+  display: flex;
+  justify-content: center;
 }
 
 .welcome-button:hover {

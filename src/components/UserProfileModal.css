@@ -3,7 +3,7 @@
   top: 180px;
   left: 400px;
   width: 50vw;
-  height: 50vh;
+  height: 60vh;
   background-color: rgba(240, 248, 255, 0.6);
   backdrop-filter: blur(8px);
   z-index: 1;
@@ -31,14 +31,14 @@
 }
 
 #profile-picture {
-  width: 300px;
+  width: 200px;
   height: auto;
-  border-radius: 50%;
-  object-fit: cover;
-  margin-left: 20px;
+  margin-left: 40px;
+  margin-top: 40px;
 }
 
 #user-profile-wrapper {
+  font-size: 20px;
   display: flex;
   justify-content: space-around;
   color: #224354;
@@ -49,4 +49,59 @@
   justify-content: space-between;
   margin-right: 40px;
   padding: 5px;
+}
+
+#profile-picture-wrapper {
+  display: flex;
+  flex-direction: column;
+}
+
+#edit-info-icon {
+  margin: 20px;
+  margin-left: 40px;
+  cursor: pointer;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  width: 200px;
+  height: 40px;
+}
+
+#edit-info-icon:hover {
+  background-color: #224354;
+  color: aliceblue;
+}
+
+#user-profile-data input {
+  text-align: right;
+  font-size: 25px;
+  background-color: #224354;
+  color: aliceblue;
+  width: 200px;
+}
+
+#user-profile-wrapper button {
+  width: 200px;
+  margin-left: 40px;
+  font-size: 20px;
+  height: 40px;
+  border: apx solid #224354;
+  background-color: aliceblue;
+  color: #224354;
+  cursor: pointer;
+}
+
+#user-profile-wrapper button:hover {
+  background-color: #224354;
+  color: aliceblue;
+  border: 1px solid aliceblue;
+}
+
+#profile-picture-wrapper input {
+  font-size: 15px;
+  background-color: #224354;
+  color: aliceblue;
+  width: 190px;
+  margin-left: 40px;
+  margin-top: 10px;
 }

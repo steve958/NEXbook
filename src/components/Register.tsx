@@ -1,8 +1,11 @@
-import React, { useRef } from 'react'
+import React, { useRef, useState } from 'react'
+import { registerUser } from '../helpers/ApiCalls'
+import Error from './Error'
+import RegistrationSuccessModal from './RegistrationSuccessMoldal'
 
 interface RegisterProps {
-  setLoading: Function
   setRegisterClicked: Function
+  setLoginClicked: Function
 }
 
 const Register: React.FC<RegisterProps> = (props) => {
@@ -11,66 +14,55 @@ const Register: React.FC<RegisterProps> = (props) => {
   const registerInputAvatar = useRef<HTMLInputElement>(null)
   const registerInputAge = useRef<HTMLInputElement>(null)
   const registerInputProfession = useRef<HTMLInputElement>(null)
-  const registerInputEmail = useRef<HTMLInputElement>(null)
+  const registerInputUserName = useRef<HTMLInputElement>(null)
   const registerInputPassword = useRef<HTMLInputElement>(null)
+  const [errorMessage, setErrorMessage] = useState<string>('')
+  const [successRegistration, setSuccessRegistration] = useState<boolean>(false)
 
-  const registrationSubmit = (
-    first_name: string,
-    last_name: string,
-    avatar: string,
-    age: string,
-    profession: string,
-    email: string,
-    password: string,
-  ) => {
-    return {
-      first_name,
-      last_name,
-      avatar,
-      age,
-      profession,
-      status: [],
-      messages: [],
-      email,
-      password,
+  function handleEmpty(event: any) {
+    event.preventDefault()
+  }
+
+  async function handleRegister(event: any) {
+    event.preventDefault()
+    if (
+      registerInputFirstName.current?.value &&
+      registerInputLastName.current?.value &&
+      registerInputAvatar.current?.value &&
+      registerInputAge.current?.value &&
+      registerInputProfession.current?.value &&
+      registerInputUserName.current?.value &&
+      registerInputPassword.current?.value
+    ) {
+      const enteredFirstName = registerInputFirstName.current!.value
+      const enteredLastName = registerInputLastName.current!.value
+      const enteredAvatar = registerInputAvatar.current!.value
+      const enteredAge = registerInputAge.current!.value
+      const enteredProfession = registerInputProfession.current!.value
+      const enteredUserName = registerInputUserName.current!.value
+      const enteredPassword = registerInputPassword.current!.value
+
+      const response = await registerUser(
+        enteredFirstName,
+        enteredLastName,
+        enteredAvatar,
+        enteredAge,
+        enteredProfession,
+        enteredUserName,
+        enteredPassword,
+      )
+      console.log(response)
+      if (response === 'Successful registration') {
+        setSuccessRegistration(!successRegistration)
+      } else {
+        setErrorMessage(response.message)
+      }
+    } else {
+      setErrorMessage('Please fill all the input fields')
     }
   }
-
-  function handleRegister(event: any) {
-    event.preventDefault()
-    props.setLoading(true)
-    props.setRegisterClicked(false)
-
-    const enteredFirstName = registerInputFirstName.current!.value
-    const enteredLastName = registerInputLastName.current!.value
-    const enteredAvatar = registerInputAvatar.current!.value
-    const enteredAge = registerInputAge.current!.value
-    const enteredProfession = registerInputProfession.current!.value
-    const enteredEmail = registerInputEmail.current!.value
-    const enteredPassword = registerInputPassword.current!.value
-
-    fetch('https://62a703ea97b6156bff850657.mockapi.io/api/vi/Users', {
-      method: 'POST',
-      headers: {
-        'Content-Type' : 'application/json'
-      },
-      body: JSON.stringify(
-        registrationSubmit(
-          enteredFirstName,
-          enteredLastName,
-          enteredAvatar,
-          enteredAge,
-          enteredProfession,
-          enteredEmail,
-          enteredPassword,
-        ),
-      ),
-    })
-      .then((res) => res.json())
-      .then((data) => console.log(data))
-  }
   return (
-    <div id="form-wrapper">
+    <div id="form-wrapper" data-testid="register-form">
       <form>
         <input
           type="text"
@@ -78,23 +70,45 @@ const Register: React.FC<RegisterProps> = (props) => {
           ref={registerInputFirstName}
         />
         <input type="text" placeholder="lastname" ref={registerInputLastName} />
-        <input type="text" placeholder="avatar" ref={registerInputAvatar}/>
+        <input
+          type="text"
+          placeholder="paste URL of your avatar"
+          ref={registerInputAvatar}
+        />
         <input type="number" placeholder="age" ref={registerInputAge} />
         <input
           type="text"
           placeholder="profession"
           ref={registerInputProfession}
         />
-        <input type="text" placeholder="email" ref={registerInputEmail} />
+        <input type="text" placeholder="username" ref={registerInputUserName} />
         <input
           type="password"
           placeholder="password"
           ref={registerInputPassword}
         />
-        <button className="form-button" onClick={(e) => handleRegister(e)}>
+        <button
+          className="form-button"
+          onClick={
+            errorMessage || successRegistration
+              ? (e) => handleEmpty(e)
+              : (e) => handleRegister(e)
+          }
+          id={errorMessage || successRegistration ? 'disabled' : 'empty'}
+        >
           REGISTER
         </button>
       </form>
+      {errorMessage && (
+        <Error errorMessage={errorMessage} setErrorMessage={setErrorMessage} />
+      )}
+      {successRegistration && (
+        <RegistrationSuccessModal
+          setModal={setSuccessRegistration}
+          setLoginClicked={props.setLoginClicked}
+          setRegisterClicked={props.setRegisterClicked}
+        />
+      )}
     </div>
   )
 }

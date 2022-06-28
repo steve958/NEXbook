@@ -1,12 +1,18 @@
-import React from 'react'
+import React, { useState } from 'react'
 import './UserProfileModal.css'
-import { Close } from '@mui/icons-material'
+import { Close, Edit } from '@mui/icons-material'
+import { useAppSelector } from '../app/hooks'
 
 interface UserProfileModalProps {
   setUserProfileClicked: Function
 }
 
 const UserProfileModal: React.FC<UserProfileModalProps> = (props) => {
+  const [editInfoClicked, setEditInfoClicked] = useState<boolean>(false)
+  const loggedUser = useAppSelector((state) => state.user.loggedUser)
+
+  function handleChanges() {}
+
   return (
     <div id="user-profile-modal">
       <span
@@ -19,29 +25,62 @@ const UserProfileModal: React.FC<UserProfileModalProps> = (props) => {
         <div id="user-profile-data">
           <h1>YOUR PROFILE DATA</h1>
           <span>
-            <p>first name:</p> <p>STEVE</p>
+            <p>first name:</p>{' '}
+            {editInfoClicked ? (
+              <input type="text" defaultValue={loggedUser?.firstName} />
+            ) : (
+              <p>{loggedUser?.firstName}</p>
+            )}
           </span>
           <span>
             <p>last name:</p>
-            <p> NEX</p>
+            {editInfoClicked ? (
+              <input type="text" defaultValue={loggedUser?.lastName} />
+            ) : (
+              <p>{loggedUser?.lastName}</p>
+            )}
           </span>
           <span>
             <p>age:</p>
-            <p>31</p>
+            {editInfoClicked ? (
+              <input type="text" defaultValue={loggedUser?.age} />
+            ) : (
+              <p>{loggedUser?.age}</p>
+            )}
           </span>
           <span>
             <p>profession:</p>
-            <p>SCIENTIST</p>
+            {editInfoClicked ? (
+              <input type="text" defaultValue={loggedUser?.profession} />
+            ) : (
+              <p>{loggedUser?.profession}</p>
+            )}
           </span>
           <span>
-            <p>email:</p>
-            <p>stevenex@gmail.com</p>
+            <p>username</p>
+            {editInfoClicked ? (
+              <input type="text" defaultValue={loggedUser?.userName} />
+            ) : (
+              <p>{loggedUser?.userName}</p>
+            )}
           </span>
         </div>
-        <img
-          id="profile-picture"
-          src="https://previews.123rf.com/images/pandavector/pandavector1901/pandavector190105561/126045782-vector-illustration-of-avatar-and-dummy-sign-collection-of-avatar-and-image-stock-symbol-for-web-.jpg"
-        />
+        <span id="profile-picture-wrapper">
+          <img id="profile-picture" src={loggedUser?.avatar} />
+          {editInfoClicked ? (
+            <input type="text" placeholder="paste URL of your avatar" />
+          ) : null}
+          <span
+            id="edit-info-icon"
+            onClick={() => setEditInfoClicked(!editInfoClicked)}
+          >
+            <Edit />
+            <p>Edit your info</p>
+          </span>
+          {editInfoClicked && (
+            <button onClick={handleChanges}>SAVE CHANGES</button>
+          )}
+        </span>
       </div>
     </div>
   )

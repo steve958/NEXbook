@@ -1,15 +1,18 @@
 import React from 'react'
 import './Topbar.css'
 import { Search, Person, Notifications, Message } from '@mui/icons-material'
+import { useAppDispatch } from '../app/hooks'
+import { userLogout } from '../features/user-slice'
 
 interface TopBarProps {
-  setLoading: Function
   setProfileClicked: Function
   setSendMessageClicked: Function
   setShowMessagesClicked: Function
 }
 
 const TopBar: React.FC<TopBarProps> = (props) => {
+  const dispatch = useAppDispatch()
+
   return (
     <div id="topbar-wrapper">
       <div id="topbar-left">
@@ -45,7 +48,7 @@ const TopBar: React.FC<TopBarProps> = (props) => {
           <span id="message-count">0</span>
         </span>
       </div>
-      <span onClick={() => props.setLoading(false)}>LOGOUT</span>
+      <span onClick={() => dispatch(userLogout())}>LOGOUT</span>
     </div>
   )
 }

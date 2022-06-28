@@ -1,0 +1,45 @@
+#error-container {
+  position: absolute;
+  top: 220px;
+  z-index: 1;
+  border: 2px solid;
+  width: 30vw;
+  height: 45vh;
+  font-size: 20px;
+  text-align: center;
+  background-color: aliceblue;
+}
+
+#error-wrapper {
+  background-color: bisque;
+}
+
+#error-container img {
+  width: 150px;
+  height: auto;
+}
+
+#error-container h1 {
+  padding: 0;
+  margin-top: 20px;
+}
+
+#error-container button {
+  background-color: bisque;
+  color: white;
+  font-size: 25px;
+  border: none;
+  padding: 10px;
+  cursor: pointer;
+  border-radius: 45px;
+  box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease 0s;
+}
+
+#error-container button:hover {
+  border: 2px solid bisque;
+  color: bisque;
+  background-color: white;
+  box-shadow: 0px 15px 20px #104f55;
+  transform: translateY(-7px);
+}
