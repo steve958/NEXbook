@@ -69,7 +69,6 @@
   color: aliceblue;
   font-size: 30px;
   border-radius: 5px;
-  opacity: 0.5;
   transition: 0.3s;
   width: 200px;
   margin-top: 10px;
@@ -81,7 +80,6 @@
   background: transparent;
   cursor: pointer;
   color: #224354;
-  opacity: 0.8;
   transition: 0.3s;
   box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2);
 }

@@ -57,8 +57,8 @@
   display: flex;
   position: absolute;
   align-items: center;
-  right: 20px;
-  bottom: 15px;
+  right: 10px;
+  bottom: 10px;
   padding: 0;
   height: 20px;
   transition: transform 0.5s;
@@ -72,9 +72,47 @@
   margin-left: 10px;
 }
 
-.like-clicked {
-  animation: bounce 1s ease-in;
+#like-clicked {
   color: green;
+  display: flex;
+  position: absolute;
+  align-items: center;
+  right: 10px;
+  bottom: 10px;
+  padding: 0;
+  height: 20px;
+  transition: transform 0.5s;
+  animation: bounce 1s ease-in;
+  cursor: pointer;
+}
+
+#like-clicked span {
+  margin-right: 10px;
+  margin-left: 10px;
+}
+
+#likes-avatars-show {
+  position: absolute;
+  max-width: 200px;
+  padding: 5px;
+  overflow-x: auto;
+  height: max-content;
+  background-color: #224354;
+  animation: show 1s ease-in;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  right: 20px;
+  top: -10px;
+  border-radius: 10px;
+}
+
+#likes-avatars-show-img {
+  transition: all 2s;
+  border-radius: 50%;
+  width: 50px;
+  height: 50px;
+  margin: 2px;
 }
 
 @keyframes bounce {
@@ -89,5 +127,20 @@
   }
   100% {
     transform: rotateY(360deg);
+  }
+}
+
+@keyframes show {
+  0% {
+    opacity: 0.4;
+  }
+  33% {
+    opacity: 0.6;
+  }
+  66% {
+    opacity: 0.8;
+  }
+  100% {
+    opacity: 1;
   }
 }

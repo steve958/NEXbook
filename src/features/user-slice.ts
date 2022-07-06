@@ -1,26 +1,16 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
-
-export interface UserData {
-  _id: string
-  firstName: string
-  lastName: string
-  avatar: string
-  age: string
-  profession: string
-  userName: string
-  password: string
-  feeds: any
-  inbox: any
-}
+import { User } from '../helpers/types'
 
 interface UserState {
   loggedIn: string
-  allUsersData: UserData[] | null
-  loggedUser: UserData | null
+  loggedInId: string
+  allUsersData: User[] | null
+  loggedUser: User | null
 }
 
 const initialState: UserState = {
   loggedIn: '',
+  loggedInId: '',
   allUsersData: null,
   loggedUser: null,
 }
@@ -32,13 +22,21 @@ const userSlice = createSlice({
     userLogin(state, action: PayloadAction<string>) {
       state.loggedIn = action.payload
     },
+
+    userLoginId(state, action: PayloadAction<string>) {
+      state.loggedInId = action.payload
+    },
+
     userLogout(state) {
       state.loggedIn = ''
+      state.loggedInId = ''
+      state.allUsersData = null
+      state.loggedUser = null
     },
-    setInitialUsersdata(state, action: PayloadAction<UserData[]>) {
+    setInitialUsersdata(state, action: PayloadAction<User[]>) {
       state.allUsersData = action.payload
     },
-    setLoggedUsersData(state, action: PayloadAction<UserData>) {
+    setLoggedUsersData(state, action: PayloadAction<User>) {
       state.loggedUser = action.payload
     },
   },
@@ -46,6 +44,7 @@ const userSlice = createSlice({
 
 export const {
   userLogin,
+  userLoginId,
   userLogout,
   setInitialUsersdata,
   setLoggedUsersData,

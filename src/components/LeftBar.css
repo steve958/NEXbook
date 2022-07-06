@@ -41,6 +41,7 @@
   height: auto;
   border-radius: 50%;
   border: 2px solid aliceblue;
+  cursor: pointer;
 }
 
 .left-bar-users-wrapper {
@@ -65,4 +66,29 @@
 
 .hover-text {
   font-size: 15px;
+}
+
+#name-query {
+  font-size: 20px;
+  border-radius: 20px;
+  height: 30px;
+  background: transparent;
+  color: aliceblue;
+  text-align: center;
+  border: 2px solid aliceblue;
+  font-style: italic;
+  transition: all 2s;
+}
+
+#name-query::placeholder {
+  color: aliceblue;
+}
+
+#name-query:hover::placeholder {
+  color: #224354;
+}
+
+#name-query:hover {
+  color: #224354;
+  border: 2px solid #224354;
 }

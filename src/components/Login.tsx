@@ -1,6 +1,10 @@
 import React, { useRef, useState } from 'react'
-import { loginUser } from '../helpers/ApiCalls'
-import { userLogin } from '../features/user-slice'
+import { loginUser, onlyLoggedUser } from '../helpers/ApiCalls'
+import {
+  setLoggedUsersData,
+  userLogin,
+  userLoginId,
+} from '../features/user-slice'
 import { useAppDispatch, useAppSelector } from '../app/hooks'
 import Error from './Error'
 
@@ -23,10 +27,14 @@ const Login: React.FC<LoginProps> = (props) => {
       console.log(response)
       enteredUserName.current!.value = ''
       enteredPassword.current!.value = ''
-      if (response !== 'Success') {
+      if (response === 'Access denied' || response === 'Cannot find user') {
         setErrorMessage(response)
       } else {
         dispatch(userLogin(userName))
+        dispatch(userLoginId(response))
+        const userData = await onlyLoggedUser(response)
+        console.log(userData)
+        dispatch(setLoggedUsersData(userData))
         props.setLoginClicked(false)
       }
     } else {

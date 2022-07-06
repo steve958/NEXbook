@@ -9,5 +9,7 @@ export function patchHelper() {
     password: null,
     feeds: null,
     inbox: null,
+    outbox: null,
+    notifications: null,
   }
 }

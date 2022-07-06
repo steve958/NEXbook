@@ -1,12 +1,16 @@
-import React from 'react'
+import React, { useState } from 'react'
 import './ShowMessagesModal.css'
 import { Close } from '@mui/icons-material'
+import Inbox from './Inbox'
+import SentMessages from './SentMessages'
 
 interface ShowMessagesModalProps {
   setShowMessagesClicked: Function
 }
 
 const ShowMessagesModal: React.FC<ShowMessagesModalProps> = (props) => {
+  const [sentMessagesClicked, setSendMessagesClicked] = useState<boolean>(false)
+
   return (
     <div id="show-messages-modal">
       <div id="show-messages-wrapper">
@@ -16,36 +20,22 @@ const ShowMessagesModal: React.FC<ShowMessagesModalProps> = (props) => {
         >
           <Close />
         </span>
-        <h1 id="header">MESSAGES</h1>
-        <div id="message-wrapper">
-          <h1>from</h1>
-          <h1>USER 1</h1>
-          <p id="message-content">
-            Lorem ipsum dolor sit amet consectetur, adipisicing elit. Nostrum ex
-            deleniti quam, sunt perspiciatis aliquam corporis et, aspernatur vel
-            dolores doloremque ipsum, error inventore laudantium sint quaerat
-            assumenda quas voluptatibus.
-          </p>
-        </div>
-        <div id="message-wrapper">
-          <h1>from</h1>
-          <h1>USER 1</h1>
-          <p id="message-content">
-            Lorem ipsum dolor sit amet consectetur, adipisicing elit. Nostrum ex
-            deleniti quam, sunt perspiciatis aliquam corporis et, aspernatur vel
-            dolores doloremque ipsum, error inventore laudantium sint quaerat
-            assumenda quas voluptatibus.
-          </p>
-        </div>
-        <div id="message-wrapper">
-          <h1>from</h1>
-          <h1>USER 1</h1>
-          <p id="message-content">
-            Lorem ipsum dolor sit amet consectetur, adipisicing elit. Nostrum ex
-            deleniti quam, sunt perspiciatis aliquam corporis et, aspernatur vel
-            dolores doloremque ipsum, error inventore laudantium sint quaerat
-            assumenda quas voluptatibus.
-          </p>
+        <span id="show-messages-icons-wrapper">
+          <div
+            id={sentMessagesClicked ? 'inbox-icon' : 'active-icon'}
+            onClick={() => setSendMessagesClicked(false)}
+          >
+            inbox
+          </div>
+          <div
+            id={!sentMessagesClicked ? 'sent-messages-icon' : 'active-icon'}
+            onClick={() => setSendMessagesClicked(true)}
+          >
+            sent messages
+          </div>
+        </span>
+        <div id="scrolling-wrapper">
+          {sentMessagesClicked ? <SentMessages /> : <Inbox />}
         </div>
       </div>
     </div>

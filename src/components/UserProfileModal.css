@@ -26,15 +26,17 @@
   cursor: pointer;
   background-color: #224354;
   color: aliceblue;
-  border-radius: 50%;
+  width: 30px;
   text-align: center;
 }
 
 #profile-picture {
   width: 200px;
   height: auto;
+  max-height: 300px;
   margin-left: 40px;
   margin-top: 40px;
+  border: 5px double #224354;
 }
 
 #user-profile-wrapper {
@@ -104,4 +106,12 @@
   width: 190px;
   margin-left: 40px;
   margin-top: 10px;
+}
+
+#profile-picture-wrapper input::placeholder {
+  color: aliceblue;
+}
+
+.other-profile {
+  width: 300px;
 }

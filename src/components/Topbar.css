@@ -32,47 +32,47 @@
   height: 30px;
   border-radius: 10px;
   border: none;
-  color: #224354
+  color: #224354;
 }
 
 #topbar-right {
-    width: 200px;
-    display: flex;
-    justify-content: space-around;
-    position: relative;
-    color: #224354
+  width: 200px;
+  display: flex;
+  justify-content: space-around;
+  position: relative;
+  color: #224354;
 }
 
 #topbar-right span:active {
-    color: gold;
+  color: gold;
 }
 
 #notification-count {
-    display: flex;
-    position: absolute;
-    background-color: red;
-    color: aliceblue;
-    width: 20px;
-    height: 20px;
-    border-radius: 50%;
-    justify-content: center;
-    align-items: center;
-    top: -5px;
-    right: 70px;
+  display: flex;
+  position: absolute;
+  background-color: red;
+  color: aliceblue;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  justify-content: center;
+  align-items: center;
+  top: -5px;
+  right: 70px;
 }
 
 #message-count {
-    display: flex;
-    position: absolute;
-    background-color: red;
-    color: aliceblue;
-    width: 20px;
-    height: 20px;
-    border-radius: 50%;
-    justify-content: center;
-    align-items: center;
-    top: -5px;
-    right: 0;
+  display: flex;
+  position: absolute;
+  background-color: red;
+  color: aliceblue;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  justify-content: center;
+  align-items: center;
+  top: -5px;
+  right: 0;
 }
 
 #book-logo {

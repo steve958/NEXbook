@@ -1,30 +1,118 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useRef } from 'react'
 import './LeftBar.css'
 import { EmailOutlined } from '@mui/icons-material'
-import { useAppDispatch, useAppSelector } from '../app/hooks'
-import { filterUser } from '../helpers/filters'
-import { setLoggedUsersData } from '../features/user-slice'
+import { useAppSelector } from '../app/hooks'
 
 interface LeftBarProps {
   setSendMessageClicked: Function
   setUserProfileClicked: Function
   setShowMessagesClicked: Function
   setSenderInformation: Function
+  setOtherUserProfileClicked: Function
 }
 
 const LeftBar: React.FC<LeftBarProps> = (props) => {
   const [sendMessageHover, setSendMessageHover] = useState<string>('')
-  const allUsersData = useAppSelector((state) => state.user.allUsersData)
-  const loggedUserName = useAppSelector((state) => state.user.loggedIn)
-  const dispatch = useAppDispatch()
-  const loggedUser = useAppSelector((state) => state.user.loggedUser)
+  const [nameQuery, setNameQuery] = useState<string>('')
+  const enteredName = useRef<HTMLInputElement>(null)
+  let allUsersData = useAppSelector((state) => state.user.allUsersData)
+  let loggedUserName = useAppSelector((state) => state.user.loggedIn)
+  let loggedUser = useAppSelector((state) => state.user.loggedUser)
 
-  useEffect(() => {
-    if (allUsersData && loggedUserName) {
-      const user = filterUser(loggedUserName, allUsersData)
-      dispatch(setLoggedUsersData(user))
-    }
-  })
+  function usersDataFiltered() {
+    return allUsersData!
+      .filter((user) => user.userName !== loggedUserName)
+      .filter(
+        (user) =>
+          user.firstName.toLowerCase().includes(nameQuery) ||
+          user.lastName.toLowerCase().includes(nameQuery),
+      )
+      .map((user) => {
+        return (
+          <div className="left-bar-users-wrapper" key={user._id}>
+            <img
+              className="left-bar-users-avatar"
+              src={user.avatar}
+              alt="photo"
+              onClick={() => {
+                props.setUserProfileClicked(true)
+                props.setOtherUserProfileClicked(user.userName)
+              }}
+            />
+            <h3>
+              {user.firstName} {user.lastName}
+            </h3>
+            <span
+              onMouseEnter={() => setSendMessageHover(user._id)}
+              onMouseLeave={() => setSendMessageHover('')}
+              onClick={() => {
+                props.setSendMessageClicked(true)
+                props.setOtherUserProfileClicked('')
+                props.setUserProfileClicked(false)
+                props.setShowMessagesClicked(false)
+                props.setSenderInformation({
+                  id: user._id,
+                  avatar: user.avatar,
+                  firstName: user.firstName,
+                })
+              }}
+              className="send-message-icon"
+            >
+              {sendMessageHover === user._id ? (
+                <p className="hover-texe">SEND MESSAGE</p>
+              ) : (
+                <EmailOutlined />
+              )}
+            </span>
+          </div>
+        )
+      })
+  }
+
+  function usersData() {
+    return allUsersData!
+      .filter((user) => user.userName !== loggedUserName)
+      .map((user) => {
+        return (
+          <div className="left-bar-users-wrapper" key={user._id}>
+            <img
+              className="left-bar-users-avatar"
+              src={user.avatar}
+              alt="photo"
+              onClick={() => {
+                props.setUserProfileClicked(true)
+                props.setOtherUserProfileClicked(user.userName)
+              }}
+            />
+            <h3>
+              {user.firstName} {user.lastName}
+            </h3>
+            <span
+              onMouseEnter={() => setSendMessageHover(user._id)}
+              onMouseLeave={() => setSendMessageHover('')}
+              onClick={() => {
+                props.setSendMessageClicked(true)
+                props.setOtherUserProfileClicked('')
+                props.setUserProfileClicked(false)
+                props.setShowMessagesClicked(false)
+                props.setSenderInformation({
+                  id: user._id,
+                  avatar: user.avatar,
+                  firstName: user.firstName,
+                })
+              }}
+              className="send-message-icon"
+            >
+              {sendMessageHover === user._id ? (
+                <p className="hover-texe">SEND MESSAGE</p>
+              ) : (
+                <EmailOutlined />
+              )}
+            </span>
+          </div>
+        )
+      })
+  }
 
   return (
     <div id="left-bar-wrapper">
@@ -36,44 +124,16 @@ const LeftBar: React.FC<LeftBarProps> = (props) => {
       <h1>Hello {loggedUser ? `${loggedUser.firstName}` : null}</h1>
       <div id="left-bar-users-list">
         <h3>Send a message to other NEXbook users</h3>
-        {allUsersData &&
-          allUsersData
-            .filter((user) => user.userName !== loggedUserName)
-            .map((user) => {
-              return (
-                <div className="left-bar-users-wrapper" key={user._id}>
-                  <img
-                    className="left-bar-users-avatar"
-                    src={user.avatar}
-                    alt="photo"
-                  />
-                  <h3>
-                    {user.firstName} {user.lastName}
-                  </h3>
-                  <span
-                    onMouseEnter={() => setSendMessageHover(user._id)}
-                    onMouseLeave={() => setSendMessageHover('')}
-                    onClick={() => {
-                      props.setSendMessageClicked(true)
-                      props.setUserProfileClicked(false)
-                      props.setShowMessagesClicked(false)
-                      props.setSenderInformation({
-                        id: user._id,
-                        avatar: user.avatar,
-                        firstName: user.firstName,
-                      })
-                    }}
-                    className="send-message-icon"
-                  >
-                    {sendMessageHover === user._id ? (
-                      <p className="hover-texe">SEND MESSAGE</p>
-                    ) : (
-                      <EmailOutlined />
-                    )}
-                  </span>
-                </div>
-              )
-            })}
+        <input
+          type="text"
+          placeholder="search users by name"
+          id="name-query"
+          ref={enteredName}
+          onChange={() => setNameQuery(enteredName.current!.value)}
+        />
+        {nameQuery
+          ? allUsersData && usersDataFiltered()
+          : allUsersData && usersData()}
       </div>
     </div>
   )

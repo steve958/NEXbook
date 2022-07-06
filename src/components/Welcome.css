@@ -13,36 +13,41 @@
 }
 
 #welcome-wrapper {
+  position: relative;
   display: flex;
   width: 50vw;
-  justify-content: space-around;
+  justify-content: center;
   margin-bottom: 20px;
   z-index: 1;
 }
 
 .welcome-button {
   border: 2px solid white;
-  background: transparent;
+  background-color: #224354;
   color: white;
-  font-size: 1em;
-  opacity: 0.5;
+  font-size: 1.5em;
+  margin-left: 150px;
+  margin-right: 150px;
+  opacity: 1;
   transition: 0.3s;
-  width: 300px;
-  letter-spacing: 15px;
+  width: 80px;
   display: flex;
   justify-content: center;
 }
 
 .welcome-button:hover {
-  border-radius: 55px;
+  border: 2px solid #224354;
+  background: transparent;
   cursor: pointer;
-  border: 2px solid #104f55;
-  background-color: aliceblue;
-  cursor: pointer;
-  color: #104f55;
-  opacity: 0.8;
-  transition: 0.5s;
-  box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2);
+  color: aliceblue;
+  width: 250px;
+  text-decoration: underline;
+  text-decoration-color: #224354;
+  margin-left: 65px;
+  margin-right: 65px;
+  opacity: 1;
+  transition: 1s;
+  box-shadow: 0 10px 16px 0 aliceblue;
 }
 
 .welcome-button:focus {
