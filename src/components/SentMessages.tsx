@@ -16,9 +16,7 @@ const SentMessages: React.FC<SentMessagesProps> = (props) => {
     const payload = {
       deletedId: messageId,
     }
-    console.log(payload)
     const response = await deleteMessageFromOutbox(userId, payload)
-    console.log(response)
     const userData = await onlyLoggedUser(loggedUser!._id)
     dispatch(setLoggedUsersData(userData))
   }

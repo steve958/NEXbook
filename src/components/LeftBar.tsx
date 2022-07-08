@@ -59,7 +59,7 @@ const LeftBar: React.FC<LeftBarProps> = (props) => {
               className="send-message-icon"
             >
               {sendMessageHover === user._id ? (
-                <p className="hover-texe">SEND MESSAGE</p>
+                <p id="hover-text-send-message">SEND MESSAGE</p>
               ) : (
                 <EmailOutlined />
               )}

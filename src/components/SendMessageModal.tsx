@@ -4,7 +4,7 @@ import { Close, Send } from '@mui/icons-material'
 import { useAppSelector, useAppDispatch } from '../app/hooks'
 import { editUser, onlyLoggedUser } from '../helpers/ApiCalls'
 import { patchHelper } from '../helpers/patchHelper'
-import { setLoggedUsersData } from '../features/user-slice'
+import { setInitialUsersdata, setLoggedUsersData } from '../features/user-slice'
 import { filterUserById } from '../helpers/filters'
 
 interface SendMessageProps {
@@ -33,12 +33,9 @@ const SendMessageModal: React.FC<SendMessageProps> = (props) => {
       messageDate: new Date(),
     }
     const payloadReceiver = { ...patchHelper(), inbox }
-    console.log(payloadReceiver)
     const payloadSender = { ...patchHelper(), outbox }
     const receiver = await editUser(id, payloadReceiver)
-    console.log(receiver)
     const sender = await editUser(loggedUser!._id, payloadSender)
-    console.log(sender)
     const userData = await onlyLoggedUser(loggedUser!._id)
     dispatch(setLoggedUsersData(userData))
   }

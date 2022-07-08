@@ -8,6 +8,8 @@ import { setLoggedUsersData } from '../features/user-slice'
 
 interface UserNotificationsModalProps {
   setSearchQuery: Function
+  setShowOnlyPrivateFeedsClicked: Function
+  setShowOnlyPublicFeedsClicked: Function
 }
 
 const UserNotificationsModal: React.FC<UserNotificationsModalProps> = (
@@ -28,16 +30,32 @@ const UserNotificationsModal: React.FC<UserNotificationsModalProps> = (
     setConfirmationModal(false)
   }
 
+  function handleNotificationsClicked(notification: Notification) {
+    props.setShowOnlyPrivateFeedsClicked(false)
+    props.setShowOnlyPublicFeedsClicked(true)
+    props.setSearchQuery(notification.actionTarget)
+  }
+
   return (
     <div id="notifications-container">
       {loggedUser!.notifications.length > 0 ? (
         loggedUser!.notifications!.map((notification: Notification) => {
           if (notification !== null) {
+            console.log(
+              (new Date().getTime() -
+                new Date(notification.actionDate).getTime()) /
+                86400000,
+            )
+
             return (
               <div
                 id="notification-wrapper"
                 key={notification._id}
-                onClick={() => props.setSearchQuery(notification.actionTarget)}
+                onClick={() =>
+                  notification.actionTarget
+                    ? handleNotificationsClicked(notification)
+                    : null
+                }
               >
                 <p>
                   {filterUserById(notification.actionTargetPerson, allUsers)
@@ -46,25 +64,23 @@ const UserNotificationsModal: React.FC<UserNotificationsModalProps> = (
                     : filterUserById(notification.actionTargetPerson, allUsers)
                         .userName}{' '}
                   liked your feed{' '}
-                  {(new Date().getTime() -
-                    new Date(notification.actionDate).getTime()) /
-                    86400000 <
-                  1
+                  {Math.round(
+                    (new Date().getTime() -
+                      new Date(notification.actionDate).getTime()) /
+                      86400000,
+                  ) < 1
                     ? 'today'
-                    : (new Date().getTime() -
-                        new Date(notification.actionDate).getTime()) /
-                        86400000 ===
-                      1
-                    ? `${
+                    : Math.round(
                         (new Date().getTime() -
                           new Date(notification.actionDate).getTime()) /
-                        86400000
-                      } day ago`
-                    : `${
+                          86400000,
+                      ) === 1
+                    ? `yesterday`
+                    : `${Math.round(
                         (new Date().getTime() -
                           new Date(notification.actionDate).getTime()) /
-                        86400000
-                      } days ago`}
+                          86400000,
+                      )} days ago`}
                 </p>
               </div>
             )

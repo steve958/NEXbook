@@ -27,7 +27,6 @@ const TopBar: React.FC<TopBarProps> = (props) => {
   const [notifications, setNotifications] = useState<number>(0)
   const dispatch = useAppDispatch()
   const loggedUser = useAppSelector((state) => state.user.loggedUser)
-  console.log(loggedUser)
   useEffect(() => {
     async function setCountInfo() {
       await setCount(filterUnseenMessagesCount(loggedUser?.inbox))
@@ -41,7 +40,6 @@ const TopBar: React.FC<TopBarProps> = (props) => {
   async function handleNotifications(id: string) {
     props.setUserNotificationsClicked(!props.userNotificationsClicked)
     const response = await notificationsSeen(id)
-    console.log(response)
     dispatch(setLoggedUsersData(response))
   }
 
@@ -54,13 +52,15 @@ const TopBar: React.FC<TopBarProps> = (props) => {
       <div id="topbar-center">
         <input
           type="text"
-          placeholder="search for feed content"
+          placeholder="search feeds"
           ref={enteredQuery}
           onChange={() => props.setSearchQuery(enteredQuery.current?.value)}
           onClick={() => props.setSearchQuery('')}
           value={
             props.searchQuery
-              ? filterFeedsById(props.searchQuery, loggedUser?.feeds)
+              ? filterFeedsById(props.searchQuery, loggedUser?.feeds) !== null
+                ? filterFeedsById(props.searchQuery, loggedUser?.feeds)
+                : null
               : ''
           }
         />
@@ -96,7 +96,16 @@ const TopBar: React.FC<TopBarProps> = (props) => {
           </span>
         </span>
       </div>
-      <span onClick={() => dispatch(userLogout())}>LOGOUT</span>
+      <span id="logout-button">
+        <div
+          onClick={() => {
+            dispatch(userLogout())
+            localStorage.clear()
+          }}
+        >
+          LOGOUT
+        </div>
+      </span>
     </div>
   )
 }

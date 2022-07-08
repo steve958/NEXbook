@@ -3,10 +3,7 @@ import { registerUser } from '../helpers/ApiCalls'
 import Error from './Error'
 import RegistrationSuccessModal from './RegistrationSuccessMoldal'
 
-interface RegisterProps {
-  setRegisterClicked: Function
-  setLoginClicked: Function
-}
+interface RegisterProps {}
 
 const Register: React.FC<RegisterProps> = (props) => {
   const registerInputFirstName = useRef<HTMLInputElement>(null)
@@ -82,11 +79,7 @@ const Register: React.FC<RegisterProps> = (props) => {
           ref={registerInputProfession}
         />
         <input type="text" placeholder="username" ref={registerInputUserName} />
-        <input
-          type="password"
-          placeholder="password"
-          ref={registerInputPassword}
-        />
+        <input type="text" placeholder="password" ref={registerInputPassword} />
         <button
           className="form-button"
           onClick={
@@ -103,11 +96,7 @@ const Register: React.FC<RegisterProps> = (props) => {
         <Error errorMessage={errorMessage} setErrorMessage={setErrorMessage} />
       )}
       {successRegistration && (
-        <RegistrationSuccessModal
-          setModal={setSuccessRegistration}
-          setLoginClicked={props.setLoginClicked}
-          setRegisterClicked={props.setRegisterClicked}
-        />
+        <RegistrationSuccessModal setModal={setSuccessRegistration} />
       )}
     </div>
   )

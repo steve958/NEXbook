@@ -52,6 +52,8 @@ export function filterLikes(userId, feed) {
 }
 
 export function filterFeedsById(feedId, feed) {
-  if (feed && feedId)
-    return feed.find((feed) => feed._id === feedId).feedContent
+  if (feed && feedId) {
+    return feed.find((feed) => feed._id === feedId)?.feedContent
+  }
+  return null
 }

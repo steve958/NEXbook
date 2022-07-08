@@ -15,6 +15,7 @@ import {
   editUser,
   toggleFeedsPrivacy,
   fetchAllUsers,
+  onlyLoggedUser,
 } from '../helpers/ApiCalls'
 import { FeedType, User } from '../helpers/types'
 import { filterFeeds, filterUser } from '../helpers/filters'
@@ -24,6 +25,10 @@ interface FeedsProps {
   setChanges: Function
   changes: boolean
   searchQuery: string
+  showOnlyPrivateFeedsClicked: boolean
+  setShowOnlyPrivateFeedsClicked: Function
+  showOnlyPublicFeedsClicked: boolean
+  setShowOnlyPublicFeedsClicked: Function
 }
 
 const Feed: React.FC<FeedsProps> = (props) => {
@@ -32,28 +37,19 @@ const Feed: React.FC<FeedsProps> = (props) => {
   const [allFeedsFromUsers, setAllFeedsFromUsers] = useState<any>([])
   const [maxCharactersError, setMaxCharactersError] = useState<boolean>(false)
   const [deleteFeedId, setDeleteFeedId] = useState<string>('')
-  const [
-    showOnlyPrivateFeedsClicked,
-    setShowOnlyPrivateFeedsClicked,
-  ] = useState<boolean>(true)
-
-  const [showOnlyPublicFeedsClicked, setShowOnlyPublicFeedsClicked] = useState<
-    boolean
-  >(false)
+  const [successfulPost, setSuccessfulPost] = useState<boolean>(false)
   const dispatch = useAppDispatch()
   let loggedUser = useAppSelector((state) => state.user.loggedUser)
   let allUsers = useAppSelector((state) => state.user.allUsersData)
   useEffect(() => {
     if (loggedUser) {
-      console.log(loggedUser!.feeds)
       setAllFeedsFromUsers(filterFeeds(allUsers))
-      console.log(allFeedsFromUsers)
     }
   }, [loggedUser, allUsers])
 
   async function postFeed() {
     const enteredText = feedContent.current!.value
-    if (enteredText.length > 40) {
+    if (enteredText.length > 50) {
       setMaxCharactersError(true)
       feedContent.current!.value = ''
       setTimeout(() => setMaxCharactersError(false), 3000)
@@ -66,12 +62,13 @@ const Feed: React.FC<FeedsProps> = (props) => {
       }
       const payload = { ...patchHelper(), feeds }
       const response = await editUser(loggedUser?._id, payload)
-      console.log(response)
       const data = await fetchAllUsers()
       dispatch(setInitialUsersdata(data))
       dispatch(setLoggedUsersData(filterUser(loggedUser!.userName, data)))
       feedContent.current!.value = ''
       setMaxCharactersError(false)
+      setSuccessfulPost(true)
+      setTimeout(() => setSuccessfulPost(false), 4000)
     }
   }
 
@@ -84,7 +81,6 @@ const Feed: React.FC<FeedsProps> = (props) => {
       },
     }
     const response = await toggleFeedsPrivacy(loggedUser!._id, payload)
-    console.log(response)
     const data = await fetchAllUsers()
     dispatch(setInitialUsersdata(data))
     dispatch(setLoggedUsersData(filterUser(loggedUser!.userName, data)))
@@ -97,10 +93,15 @@ const Feed: React.FC<FeedsProps> = (props) => {
       deletedId: id,
     }
     const response = await deleteFeed(loggedUser!._id, payload)
+    const userData = await onlyLoggedUser(loggedUser?._id)
+
     setTimeout(() => {
       props.setChanges(!props.changes)
+      if (userData._id) {
+        dispatch(setLoggedUsersData(userData))
+      }
     }, 1500)
-    console.log(response)
+
     setConfirmationModal('')
   }
 
@@ -238,10 +239,12 @@ const Feed: React.FC<FeedsProps> = (props) => {
         <div id="feed-wrapper">
           <span
             id="feed-icons-personal-feed"
-            className={showOnlyPrivateFeedsClicked ? 'active' : 'inactive'}
+            className={
+              props.showOnlyPrivateFeedsClicked ? 'active' : 'inactive'
+            }
             onClick={() => {
-              setShowOnlyPrivateFeedsClicked(true)
-              setShowOnlyPublicFeedsClicked(false)
+              props.setShowOnlyPrivateFeedsClicked(true)
+              props.setShowOnlyPublicFeedsClicked(false)
             }}
           >
             <FeedRounded />
@@ -249,10 +252,10 @@ const Feed: React.FC<FeedsProps> = (props) => {
           </span>
           <span
             id="feed-icons-public-feeds"
-            className={showOnlyPublicFeedsClicked ? 'active' : 'inactive'}
+            className={props.showOnlyPublicFeedsClicked ? 'active' : 'inactive'}
             onClick={() => {
-              setShowOnlyPrivateFeedsClicked(false)
-              setShowOnlyPublicFeedsClicked(true)
+              props.setShowOnlyPrivateFeedsClicked(false)
+              props.setShowOnlyPublicFeedsClicked(true)
             }}
           >
             <img src="https://freesvg.org/img/1312903882.png" alt="" />
@@ -264,7 +267,19 @@ const Feed: React.FC<FeedsProps> = (props) => {
         </div>
       </div>
       <div id="feed-list">
-        {showOnlyPublicFeedsClicked ? (
+        {successfulPost && (
+          <div id="successful-post">
+            <p>Nice job, {loggedUser!.firstName}</p>
+            <span>
+              <img
+                src="https://upload.wikimedia.org/wikipedia/commons/f/fb/Check-Logo.png"
+                alt="photo"
+              />
+            </span>
+            <p>You posted on NEXBOOK</p>
+          </div>
+        )}
+        {props.showOnlyPublicFeedsClicked ? (
           <LatestFeeds
             allFeedsFromUsers={allFeedsFromUsers}
             searchQuery={props.searchQuery}

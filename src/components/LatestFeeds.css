@@ -43,7 +43,8 @@
 
 .users-feed-user-avatar {
   width: 50px;
-  height: auto;
+  height: 50px;
+  object-fit: cover;
   border-radius: 50%;
   border: 2px solid aliceblue;
   margin-right: 10px;
@@ -93,9 +94,10 @@
 
 #likes-avatars-show {
   position: absolute;
-  max-width: 200px;
-  padding: 5px;
   overflow-x: auto;
+  width: fit-content;
+  max-width: 100%;
+  padding: 5px;
   height: max-content;
   background-color: #224354;
   animation: show 1s ease-in;
@@ -107,11 +109,18 @@
   border-radius: 10px;
 }
 
+#likes-avatars-show::-webkit-scrollbar {
+  height: 5px;
+  background-color: aliceblue;
+  color: gainsboro;
+}
+
 #likes-avatars-show-img {
   transition: all 2s;
   border-radius: 50%;
   width: 50px;
   height: 50px;
+  object-fit: cover;
   margin: 2px;
 }
 

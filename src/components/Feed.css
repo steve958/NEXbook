@@ -216,6 +216,34 @@
   border: 1px solid aliceblue;
 }
 
+#successful-post {
+  width: 400px;
+  height: 400px;
+  background-color: aliceblue;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  position: absolute;
+  z-index: 1;
+  right: 45vw;
+  top: 20vh;
+  transition: all 1s;
+  text-align: center;
+  font-size: 30px;
+  border: 5px solid #224354;
+  animation: fade-o-o ease-in 4s;
+}
+
+#successful-post span {
+  background-color: bisque;
+  width: 100%;
+}
+
+#successful-post img {
+  width: 150px;
+}
+
 .feed-content {
   width: 260px;
 }

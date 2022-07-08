@@ -1,4 +1,5 @@
 import React, { useRef, useState } from 'react'
+import { useNavigate } from 'react-router-dom'
 import { loginUser, onlyLoggedUser } from '../helpers/ApiCalls'
 import {
   setLoggedUsersData,
@@ -7,16 +8,17 @@ import {
 } from '../features/user-slice'
 import { useAppDispatch, useAppSelector } from '../app/hooks'
 import Error from './Error'
+import VisibilityOutlinedIcon from '@mui/icons-material/VisibilityOutlined'
 
-interface LoginProps {
-  setLoginClicked: Function
-}
+interface LoginProps {}
 
 const Login: React.FC<LoginProps> = (props) => {
   let enteredUserName = useRef<HTMLInputElement>(null)
   let enteredPassword = useRef<HTMLInputElement>(null)
   const [errorMessage, setErrorMessage] = useState<string>('')
+  const [visibilityClicked, setVisibilityClicked] = useState<boolean>(false)
   const dispatch = useAppDispatch()
+  let navigate = useNavigate()
   async function handleLogin(event: any) {
     event.preventDefault()
 
@@ -24,7 +26,6 @@ const Login: React.FC<LoginProps> = (props) => {
       let userName = enteredUserName.current!.value
       let pass = enteredPassword.current!.value
       const response = await loginUser(userName, pass)
-      console.log(response)
       enteredUserName.current!.value = ''
       enteredPassword.current!.value = ''
       if (response === 'Access denied' || response === 'Cannot find user') {
@@ -33,9 +34,8 @@ const Login: React.FC<LoginProps> = (props) => {
         dispatch(userLogin(userName))
         dispatch(userLoginId(response))
         const userData = await onlyLoggedUser(response)
-        console.log(userData)
         dispatch(setLoggedUsersData(userData))
-        props.setLoginClicked(false)
+        navigate('/home')
       }
     } else {
       setErrorMessage('Please fill all the input fields')
@@ -46,7 +46,18 @@ const Login: React.FC<LoginProps> = (props) => {
     <div id="form-wrapper" data-testid="login-form">
       <form>
         <input type="text" placeholder="username" ref={enteredUserName} />
-        <input type="password" placeholder="password" ref={enteredPassword} />
+        <input
+          type={visibilityClicked ? 'text' : 'password'}
+          placeholder="password"
+          ref={enteredPassword}
+        />
+        <span
+          id="password-visibility"
+          onMouseDown={() => setVisibilityClicked(true)}
+          onMouseUp={() => setVisibilityClicked(false)}
+        >
+          <VisibilityOutlinedIcon />
+        </span>
         <button className="form-button" onClick={(e) => handleLogin(e)}>
           LOGIN
         </button>

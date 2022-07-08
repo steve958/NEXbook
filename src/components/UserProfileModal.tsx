@@ -43,7 +43,6 @@ const UserProfileModal: React.FC<UserProfileModalProps> = (props) => {
     }
 
     const response = await editUser(loggedUser!._id, payload)
-    console.log(response)
     setEditInfoClicked(!editInfoClicked)
     const userData = await onlyLoggedUser(loggedUser!._id)
     dispatch(setLoggedUsersData(userData))

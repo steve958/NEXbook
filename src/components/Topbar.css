@@ -80,3 +80,17 @@
   height: auto;
   background-color: transparent;
 }
+
+#logout-button {
+  cursor: pointer;
+  position: relative;
+}
+
+#logout-button div:hover {
+  background-color: #224354;
+  color: aliceblue;
+  position: relative;
+  padding: 10px;
+  border-radius: 10px;
+  transition: all 1s;
+}

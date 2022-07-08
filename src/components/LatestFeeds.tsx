@@ -21,7 +21,6 @@ interface LatestFeedsProps {
 }
 
 const LatestFeeds: React.FC<LatestFeedsProps> = (props) => {
-  const [likeCliked, setLikeClicked] = useState<boolean>(false)
   const [likeAvatarsClicked, setLikeAvatarsClicked] = useState<string>('')
   let allUsers = useAppSelector((state) => state.user.allUsersData)
   let loggedUser = useAppSelector((state) => state.user.loggedUser)
@@ -37,9 +36,7 @@ const LatestFeeds: React.FC<LatestFeedsProps> = (props) => {
         feedId,
         userID: loggedUserId,
       }
-      console.log(payload)
       const response = await unlikeFeed(userId, payload)
-      console.log(response)
       const data = await fetchAllUsers()
       dispatch(setInitialUsersdata(data))
     } else {
@@ -47,9 +44,7 @@ const LatestFeeds: React.FC<LatestFeedsProps> = (props) => {
         feedId,
         userID: loggedUserId,
       }
-      console.log(payload)
       const response = await likeFeed(userId, payload)
-      console.log(response)
       const data = await fetchAllUsers()
       dispatch(setInitialUsersdata(data))
       const userData = await onlyLoggedUser(loggedUserId)
@@ -69,7 +64,13 @@ const LatestFeeds: React.FC<LatestFeedsProps> = (props) => {
     return props.allFeedsFromUsers
       .filter(
         (feed: any) =>
-          feed.feedContent.includes(props.searchQuery) ||
+          feed.feedContent.toLowerCase().includes(props.searchQuery) ||
+          filterUserById(feed.userID, allUsers)
+            .firstName.toLowerCase()
+            .includes(props.searchQuery) ||
+          filterUserById(feed.userID, allUsers)
+            .lastName.toLowerCase()
+            .includes(props.searchQuery) ||
           feed._id.includes(props.searchQuery),
       )
       .map((feed: any) => {
@@ -85,7 +86,24 @@ const LatestFeeds: React.FC<LatestFeedsProps> = (props) => {
                 {filterUserById(feed.userID, allUsers).firstName}{' '}
                 {filterUserById(feed.userID, allUsers).lastName}
               </h1>
-              <p>{feed.feedDate.toString().slice(0, 10)}</p>
+              <p>
+                {Math.trunc(
+                  (new Date().getTime() - new Date(feed.feedDate).getTime()) /
+                    3600000,
+                ) < 24
+                  ? Math.trunc(
+                      (new Date().getTime() -
+                        new Date(feed.feedDate).getTime()) /
+                        3600000,
+                    ) <= 1
+                    ? `less than 1 hour ago`
+                    : `${Math.trunc(
+                        (new Date().getTime() -
+                          new Date(feed.feedDate).getTime()) /
+                          3600000,
+                      )} hours ago`
+                  : feed.feedDate.toString().slice(0, 10)}
+              </p>
             </div>
             <div id="users-feed-content">{feed.feedContent}</div>
             <span
@@ -124,7 +142,6 @@ const LatestFeeds: React.FC<LatestFeedsProps> = (props) => {
           </div>
         )
       })
-      .slice(0, 10)
   }
 
   function showFeeds() {
@@ -142,7 +159,24 @@ const LatestFeeds: React.FC<LatestFeedsProps> = (props) => {
                 {filterUserById(feed.userID, allUsers).firstName}{' '}
                 {filterUserById(feed.userID, allUsers).lastName}
               </h1>
-              <p>{feed.feedDate.toString().slice(0, 10)}</p>
+              <p>
+                {Math.trunc(
+                  (new Date().getTime() - new Date(feed.feedDate).getTime()) /
+                    3600000,
+                ) < 24
+                  ? Math.trunc(
+                      (new Date().getTime() -
+                        new Date(feed.feedDate).getTime()) /
+                        3600000,
+                    ) <= 1
+                    ? `less than 1 hour ago`
+                    : `${Math.trunc(
+                        (new Date().getTime() -
+                          new Date(feed.feedDate).getTime()) /
+                          3600000,
+                      )} hours ago`
+                  : feed.feedDate.toString().slice(0, 10)}
+              </p>
             </div>
             <div id="users-feed-content">{feed.feedContent}</div>
             <span
@@ -181,7 +215,7 @@ const LatestFeeds: React.FC<LatestFeedsProps> = (props) => {
           </div>
         )
       })
-      .slice(0, 10)
+      .slice(0, 15)
   }
 
   return (

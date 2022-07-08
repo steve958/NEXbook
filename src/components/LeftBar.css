@@ -31,14 +31,16 @@
 
 #left-bar-avatar {
   margin: 20px;
-  border-radius: 50%;
+  border-radius: 100%;
   width: 200px;
-  height: auto;
+  max-height: 200px;
+  object-fit: cover;
 }
 
 .left-bar-users-avatar {
   width: 50px;
-  height: auto;
+  height: 50px;
+  object-fit: cover;
   border-radius: 50%;
   border: 2px solid aliceblue;
   cursor: pointer;
@@ -47,25 +49,37 @@
 .left-bar-users-wrapper {
   display: flex;
   align-items: center;
-  margin: 20px;
+  width: 350px;
+  height: 50px;
+  margin-top: 20px;
   justify-content: space-between;
 }
 
 .left-bar-users-wrapper h3 {
   font-size: 20px;
+  overflow: hidden;
 }
 
 .left-bar-users-wrapper h3 {
-  margin-right: 10px;
+  white-space: nowrap;
+  overflow: hidden;
+}
+
+.send-message-icon {
+  width: 50px;
+  text-overflow: none;
+  white-space: nowrap;
+  overflow: hidden;
+  transition: 1s;
 }
 
 .send-message-icon:hover {
   color: #104f55;
   cursor: pointer;
-}
-
-.hover-text {
-  font-size: 15px;
+  transition: 1s;
+  width: 140px;
+  margin: 1px;
+  overflow: hidden;
 }
 
 #name-query {

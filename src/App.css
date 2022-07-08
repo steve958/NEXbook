@@ -11,7 +11,7 @@ body {
   -webkit-overflow-y: hidden;
   -moz-overflow-y: hidden;
   -o-overflow-y: hidden;
-  overflow-y: auto;
+  overflow-y: hidden;
   overflow-x: hidden;
   -webkit-animation: fadeIn 1 1s ease-out;
   -moz-animation: fadeIn 1 1s ease-out;
@@ -391,6 +391,7 @@ body {
   flex-direction: column;
   width: 500px;
   z-index: 1;
+  position: relative;
 }
 
 #form-wrapper form input {
@@ -456,4 +457,17 @@ body {
   color: black;
   background-color: gray;
   box-shadow: none;
+}
+
+#password-visibility {
+  position: absolute;
+  z-index: 1;
+  right: 10px;
+  bottom: 60px;
+  cursor: pointer;
+  color: #224354;
+}
+
+#password-visibility:active {
+  color: gold;
 }

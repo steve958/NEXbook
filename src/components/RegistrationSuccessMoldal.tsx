@@ -1,10 +1,9 @@
 import React from 'react'
+import { Link } from 'react-router-dom'
 import './RegistrationSuccessModal.css'
 
 interface RegistrationSuccessModalProps {
   setModal: Function
-  setLoginClicked: Function
-  setRegisterClicked: Function
 }
 
 const RegistrationSuccessModal: React.FC<RegistrationSuccessModalProps> = (
@@ -21,15 +20,15 @@ const RegistrationSuccessModal: React.FC<RegistrationSuccessModalProps> = (
       </div>
       <p>You have successfully registered</p>
       <p>Proceed to login and type in your username and password</p>
-      <button
-        onClick={() => {
-          props.setLoginClicked(true)
-          props.setModal(false)
-          props.setRegisterClicked(false)
-        }}
-      >
-        GO TO LOGIN
-      </button>
+      <Link to="/login" style={{ textDecoration: 'none' }}>
+        <button
+          onClick={() => {
+            props.setModal(false)
+          }}
+        >
+          GO TO LOGIN
+        </button>
+      </Link>
     </div>
   )
 }

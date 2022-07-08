@@ -1,10 +1,8 @@
 import React, { Suspense } from 'react'
+import { Link } from 'react-router-dom'
 import './Welcome.css'
 
-interface WelcomeProps {
-  setLoginClicked: Function
-  setRegisterClicked: Function
-}
+interface WelcomeProps {}
 
 const Welcome: React.FC<WelcomeProps> = (props) => {
   return (
@@ -22,26 +20,16 @@ const Welcome: React.FC<WelcomeProps> = (props) => {
         />
       </Suspense>
       <div id="welcome-wrapper">
-        <button
-          data-testid="log"
-          className="welcome-button"
-          onClick={() => {
-            props.setLoginClicked(true)
-            props.setRegisterClicked(false)
-          }}
-        >
-          login
-        </button>
-        <button
-          data-testid="reg"
-          className="welcome-button"
-          onClick={() => {
-            props.setLoginClicked(false)
-            props.setRegisterClicked(true)
-          }}
-        >
-          register
-        </button>
+        <Link to="/login" style={{ textDecoration: 'none' }}>
+          <button data-testid="log" className="welcome-button">
+            login
+          </button>
+        </Link>
+        <Link to="/register" style={{ textDecoration: 'none' }}>
+          <button data-testid="reg" className="welcome-button">
+            register
+          </button>
+        </Link>
       </div>
     </div>
   )

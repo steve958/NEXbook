@@ -19,9 +19,7 @@ const Inbox: React.FC<InboxProps> = (props) => {
     const payload = {
       deletedId: messageId,
     }
-    console.log(payload)
     const response = await deleteMessage(userId, payload)
-    console.log(response)
     const userData = await onlyLoggedUser(loggedUser!._id)
     dispatch(setLoggedUsersData(userData))
   }
@@ -36,7 +34,6 @@ const Inbox: React.FC<InboxProps> = (props) => {
     }
 
     const response = await markMessageAsSeen(loggedUser!._id, payload)
-    console.log(response)
     const userData = await onlyLoggedUser(loggedUser!._id)
     dispatch(setLoggedUsersData(userData))
   }

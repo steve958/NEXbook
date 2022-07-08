@@ -8,9 +8,9 @@ import SendMessageModal from './SendMessageModal'
 import UserProfileModal from './UserProfileModal'
 import ShowMessagesModal from './ShowMessagesModal'
 import UserNotificationsModal from './UserNotificationsModal'
-import { fetchAllUsers, onlyLoggedUser } from '../helpers/ApiCalls'
-import { useAppDispatch, useAppSelector } from '../app/hooks'
-import { setInitialUsersdata, setLoggedUsersData } from '../features/user-slice'
+import { fetchAllUsers } from '../helpers/ApiCalls'
+import { useAppDispatch } from '../app/hooks'
+import { setInitialUsersdata } from '../features/user-slice'
 
 interface UserProps {}
 
@@ -31,16 +31,19 @@ const UserContent: React.FC<UserProps> = (props) => {
     avatar: string
     firstName: string
   } | null>(null)
+  const [
+    showOnlyPrivateFeedsClicked,
+    setShowOnlyPrivateFeedsClicked,
+  ] = useState<boolean>(true)
 
+  const [showOnlyPublicFeedsClicked, setShowOnlyPublicFeedsClicked] = useState<
+    boolean
+  >(false)
   const dispatch = useAppDispatch()
-  const userID = useAppSelector((state) => state.user.loggedInId)
   useEffect(() => {
     const fetchData = async () => {
       const data = await fetchAllUsers()
       dispatch(setInitialUsersdata(data))
-      const userData = await onlyLoggedUser(userID)
-      dispatch(setLoggedUsersData(userData))
-      console.log(userData)
     }
     fetchData()
   }, [changes])
@@ -74,7 +77,11 @@ const UserContent: React.FC<UserProps> = (props) => {
         searchQuery={searchQuery}
       />
       {userNotificationsClicked && (
-        <UserNotificationsModal setSearchQuery={setSearchQuery} />
+        <UserNotificationsModal
+          setSearchQuery={setSearchQuery}
+          setShowOnlyPrivateFeedsClicked={setShowOnlyPrivateFeedsClicked}
+          setShowOnlyPublicFeedsClicked={setShowOnlyPublicFeedsClicked}
+        />
       )}
       <div id="content-container">
         <LeftBar
@@ -88,6 +95,10 @@ const UserContent: React.FC<UserProps> = (props) => {
           setChanges={setChanges}
           changes={changes}
           searchQuery={searchQuery}
+          showOnlyPrivateFeedsClicked={showOnlyPrivateFeedsClicked}
+          setShowOnlyPrivateFeedsClicked={setShowOnlyPrivateFeedsClicked}
+          showOnlyPublicFeedsClicked={showOnlyPublicFeedsClicked}
+          setShowOnlyPublicFeedsClicked={setShowOnlyPublicFeedsClicked}
         />
         <RightBar />
       </div>
